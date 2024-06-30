@@ -1,3 +1,7 @@
+#Feature-extraction-of-virus-sequences
+a universal algorithm for analyzing virus genome NGS data
+
+
 ### Data preparation
 
 Before starting the project, we need to prepare the sequencing files in fastq format in the path *./data/fastqraw* . We also need the reference sequence file and the sample information file in *./public/* .  

@@ -149,7 +149,6 @@ For sequence feature calculation, the nucleotide-level mutation and Shannon entr
 
 ```shell
 mkdir $project/feature/
-cd $project/feature/
 #Calculate sequence features for each sample
 python3 feature.py
 #Merge sequence features from all samples.

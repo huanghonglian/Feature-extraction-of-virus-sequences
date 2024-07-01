@@ -57,7 +57,7 @@ done;
 
 
 ### Cutadapt
-If the results of quality control are unsatisfactory, further removal of sequence adapters is required. The trim_galore software was used to remove adapter sequences from both read1 and read2 of the paired-end sequencing data. The results are saved at *./data/clean/*. The quality control results after adapter trimming are saved in *./data/fastqc_lean*.
+If the results of quality control are unsatisfactory, further removal of sequence adapters is required. The trim_galore software was used to remove adapter sequences from both read1 and read2 of the paired-end sequencing data. The results are saved at *./data/clean/*. The quality control results after adapter trimming are saved in *./data/fastqc_clean*.
 
 ```shell
 mkdir ${fq}/clean/
@@ -90,7 +90,7 @@ bwa index -a bwtsw ref_seq.fasta
 
 
 ### Merge paired-end reads
-The Fast Length Adjustment of Short Reads (FLASH) software was used to merge the quality-controlled short sequences from Read1 and Read2, generating longer fragment sequences. If the quality control results after adapter trimming are improved, the path *\\${fq}\\${id}_1.fastq* and *\\${fq}\\${id}_1.fastq* can be changed accordingly.
+The Fast Length Adjustment of Short Reads (FLASH) software was used to merge the quality-controlled short sequences from Read1 and Read2, generating longer fragment sequences. If the quality control results after adapter trimming are improved, the path *\${fq}\${id}_1.fastq* and *\${fq}\${id}_1.fastq* can be changed accordingly.
 
 ```shell
 mkdir ${project}/data/fastqbind/

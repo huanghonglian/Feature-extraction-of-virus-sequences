@@ -21,7 +21,7 @@ mkdir $fq
 
 ### Unzip sequence file
 
-Batch decompression of paired-end sequencing data files is performed as follows
+Place the FASTQ files in the *./data/fastqraw/* folder. Batch decompression of paired-end sequencing data files is performed as follows
 ```shell
 cd ${project}/data/fastqraw/
 tail -n +2 ${public}/sample/sampleinfo.txt | cut -f 1 | while read id

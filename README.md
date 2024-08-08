@@ -92,7 +92,7 @@ do
   # cut adapters
    trim_galore --cores 2 -q 20 \
            --phred33 --stringency 3 --length 20 -e 0.1 \
-             ${fq}/${id}.fastq \ #for Single-read
+             ${fq}/${id}.fastq \ 
            --gzip -o ${project}/data/clean/
    
   #QC again
@@ -124,14 +124,16 @@ cd ${project}
 ```
 
 
+
+
 ### Sequence alignment-bwa
+
 For successfully merged reads, BWA was then used to align them with the reference sequence to extract the aligned sequences. For those unmerged reads from Read1 and Read2, BWA was used to align Read1 and Read2 separately with the reference sequence, and SAMtools software was subsequently conducted to extract the sequences that aligned at both ends. If there were duplicate regions in the sequences aligned at both ends, the duplicates were removed and the sequences were merged into one. On the contrary, Read1 and Read2 sequences were kept. 
 
 BWA for successfully merged reads, and the results are saved in *./result/bwasam/*:
 ```shell
 mkdir $result
 mkdir $result/bwasam/
-#cd ${project}/data/fastqbind/
 tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
 	bwa mem -M ${public}/reference/ref_seq.fasta ${project}/data/fastqbind/${id}.extendedFrags.fastq > $result/bwasam/${id}.sam
@@ -149,6 +151,16 @@ do
 done
 ```
 
+Single-read
+```shell
+mkdir $result
+mkdir $result/bwasam/
+tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
+do
+	bwa mem -M ${public}/reference/ref_seq.fasta ${fq}${id}.fastq > $result/bwasam/${id}.sam
+done
+```
+
 
 ### Integration of sequence matching results
 This process will generate multiple intermediate files. The final results, which include the mapping information of reads to the reference sequence for each sample, will be saved in *./result/finaldata/seq/*.
@@ -157,7 +169,7 @@ This process will generate multiple intermediate files. The final results, which
 ```shell
 # Extract the bwa results from *./result/bwasam/*
 python3 deal.py
-# Extract the bwa results from *./result/unbindsam/*. If the folder *unbindsam* is empty, this step can be skipped.
+# Extract the bwa results from *./result/unbindsam/*. Skip if single-ended sequencing.
 python3 dealunbind.py
 python3 againunbind.py
 #Integration of the extraction results

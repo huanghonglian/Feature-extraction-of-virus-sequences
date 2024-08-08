@@ -12,7 +12,7 @@ project="/home/feature_extraction4seq/"#change to your path
 fq=${project}/data/fastqraw/
 public=${project}/public/
 result=${project}/result/
-mkdir $${project}/data/
+mkdir ${project}/data/
 mkdir $result
 mkdir $fq
 

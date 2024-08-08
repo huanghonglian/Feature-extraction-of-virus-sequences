@@ -71,6 +71,7 @@ do
   # cut adapters
    trim_galore --cores 2 -q 20 \
            --phred33 --stringency 3 --length 20 -e 0.1 \
+             #${fq}/${id}.fastq \ #for Single-read
            --paired ${fq}/${id}_1.fastq  ${fq}/${id}_2.fastq \
            --gzip -o ${project}/data/clean/
    

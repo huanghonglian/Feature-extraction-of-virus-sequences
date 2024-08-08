@@ -24,7 +24,7 @@ mkdir $fq
 Place the FASTQ files in the *./data/fastqraw/* folder. Batch decompression of paired-end sequencing data files is performed as follows
 ```shell
 cd ${project}/data/fastqraw/
-tail -n +2 ${public}/sample/sampleinfo.txt | cut -f 1 | while read id
+tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
 	gunzip ${project}/data/fastqraw/${id}_2.fastq.gz
 	gunzip ${project}/data/fastqraw/${id}_1.fastq.gz
@@ -63,7 +63,7 @@ If the results of quality control are unsatisfactory, further removal of sequenc
 mkdir ${fq}/clean/
 outdir_clean=${project}//data/fastqc_clean
 mkdir $outdir_clean
-tail -n +2 ${public}/sample/sampleinfo.txt | cut -f 1 | while read id
+tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
   # QC
   #fastqc ${fq}/${id}_1.fastq  ${fq}/${id}_2.fastq -o 
@@ -95,7 +95,7 @@ The Fast Length Adjustment of Short Reads (FLASH) software was used to merge the
 ```shell
 mkdir ${project}/data/fastqbind/
 cd ${project}/data/fastqbind/
-tail -n +2 ${public}/sample/sampleinfo.txt | cut -f 1 | while read id
+tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
 	flash ${fq}${id}_1.fastq ${fq}${id}_2.fastq -p 33 -r 250 -f 500 -s 100 -o ${id}
 done
@@ -111,7 +111,7 @@ BWA for successfully merged reads, and the results are saved in *./result/bwasam
 mkdir $result
 mkdir $result/bwasam/
 #cd ${project}/data/fastqbind/
-tail -n +2 ${public}/sample/sampleinfo.txt | cut -f 1 | while read id
+tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
 	bwa mem -M ${public}/reference/ref_seq.fasta ${project}/data/fastqbind/${id}.extendedFrags.fastq > $result/bwasam/${id}.sam
 done
@@ -121,7 +121,7 @@ BWA for unmerged reads, and the results are saved in *./result/unbindsam/*:
 ```shell
 mkdir $result/unbindsam/
 #cd ${project}/data/fastqbind/
-tail -n +2 ${public}/sample/sampleinfo.txt | cut -f 1 | while read id
+tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
 	echo $id
 	bwa mem -M ${public}/reference/ref_seq.fasta ${project}/data/fastqbind/${id}.notCombined_1.fastq ${project}/data/fastqbind/${id}.notCombined_2.fastq > $result/unbindsam/${id}_unbind.sam

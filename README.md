@@ -59,6 +59,7 @@ done;
 ### Cutadapt
 If the results of quality control are unsatisfactory, further removal of sequence adapters is required. The trim_galore software was used to remove adapter sequences from both read1 and read2 of the paired-end sequencing data. The results are saved at *./data/clean/*. The quality control results after adapter trimming are saved in *./data/fastqc_clean*.
 
+Paired-End
 ```shell
 mkdir ${fq}/clean/
 outdir_clean=${project}//data/fastqc_clean
@@ -77,6 +78,23 @@ do
    
   #QC again
   fastqc  ${project}/data/clean/${id}_1_val_1.fq.gz  ${project}/data/clean/${id}_2_val_2.fq.gz -o $outdir_clean
+done
+```
+Single-read
+```shell
+tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
+do
+  # QC
+  #fastqc ${fq}/${id}_1.fastq  ${fq}/${id}_2.fastq -o 
+  
+  # cut adapters
+   trim_galore --cores 2 -q 20 \
+           --phred33 --stringency 3 --length 20 -e 0.1 \
+             ${fq}/${id}.fastq \ #for Single-read
+           --gzip -o ${project}/data/clean/
+   
+  #QC again
+  fastqc  ${project}/data/clean/${id}_trimmed.fq.gz -o $outdir_clean
 done
 ```
 

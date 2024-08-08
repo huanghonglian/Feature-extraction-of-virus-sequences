@@ -60,7 +60,6 @@ done;
 If the results of quality control are unsatisfactory, further removal of sequence adapters is required. The trim_galore software was used to remove adapter sequences from both read1 and read2 of the paired-end sequencing data. The results are saved at *./data/clean/*. The quality control results after adapter trimming are saved in *./data/fastqc_clean*.
 
 ```shell
-mkdir ${fq}/clean/
 outdir_clean=${project}//data/fastqc_clean
 mkdir $outdir_clean
 ```

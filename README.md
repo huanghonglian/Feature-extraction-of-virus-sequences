@@ -36,15 +36,11 @@ The original  sequencing data was subjected to quality control using FastQC soft
 
 ```shell
 outdir=${project}//data/fastqc
-log=${project}//data/QClog
 mkdir $outdir
-mkdir $log
-for i in $fq/*.fastq;
+tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
-  sample=${i%_clean*}
-  sample=${sample##*/}
-  fastqc -o $outdir $i > $log/$sample.log
-done;
+	fastqc $fq/${id}_1.fastq $fq/${id}_2.fastq -o $outdir
+done
 ```
 
 
@@ -130,7 +126,6 @@ For successfully merged reads, BWA was then used to align them with the referenc
 
 BWA for successfully merged reads, and the results are saved in *./result/bwasam/*:
 ```shell
-mkdir $result
 mkdir $result/bwasam/
 tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
@@ -141,7 +136,6 @@ done
 BWA for unmerged reads, and the results are saved in *./result/unbindsam/*.:
 ```shell
 mkdir $result/unbindsam/
-#cd ${project}/data/fastqbind/
 tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
 	echo $id
@@ -151,11 +145,10 @@ done
 
 Single-read
 ```shell
-mkdir $result
 mkdir $result/bwasam/
 tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
-	bwa mem -M ${public}/reference/ref_seq.fasta ${fq}${id}.fastq > $result/bwasam/${id}.sam
+	bwa mem -M ${public}/reference/ref_seq.fasta ${project}/data/clean/${id}_trimmed.fq > $result/bwasam/${id}.sam
 done
 ```
 

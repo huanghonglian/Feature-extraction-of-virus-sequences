@@ -30,14 +30,6 @@ do
 	gunzip ${project}/data/fastqraw/${id}_1.fastq.gz
 done
 ```
-or:
-```shell
-cd ${project}/data/fastqraw/
-for i in *.fastq.gz;
-do
-	gunzip $i
-done
-```
 
 ### Quality control-fastqc
 The original  sequencing data was subjected to quality control using FastQC software, including assessing base quality, sequencing depth, GC content, and adapter content.
@@ -98,7 +90,14 @@ do
   fastqc  ${project}/data/clean/${id}_trimmed.fq.gz -o $outdir_clean
 done
 ```
-
+Unzip file
+```shell
+tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
+do
+	gunzip ${project}/data/clean/${id}_2_val_2.fq.gz
+	gunzip ${project}/data/clean/${id}_1_val_1.fq.gz
+done
+```
 
 ### Reference sequence index construction
 The Burrows-Wheeler Aligner (BWA) software was used to build an index file for the reference sequence.

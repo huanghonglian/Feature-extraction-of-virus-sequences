@@ -109,14 +109,14 @@ bwa index -a bwtsw ref_seq.fasta
 
 
 ### Merge paired-end reads
-The Fast Length Adjustment of Short Reads (FLASH) software was used to merge the quality-controlled short sequences from Read1 and Read2, generating longer fragment sequences. If the quality control results after adapter trimming are improved, the path *\${fq}\${id}_1.fastq* and *\${fq}\${id}_1.fastq* can be changed accordingly.
+The Fast Length Adjustment of Short Reads (FLASH) software was used to merge the quality-controlled short sequences from Read1 and Read2, generating longer fragment sequences. 
 
 ```shell
 mkdir ${project}/data/fastqbind/
 cd ${project}/data/fastqbind/
 tail -n +2 ${public}/sample/metadata.txt | cut -f 1 | while read id
 do
-	flash ${fq}${id}_1.fastq ${fq}${id}_2.fastq -p 33 -r 250 -f 500 -s 100 -o ${id}
+	flash ${project}/data/clean/${id}_2_val_2.fq ${project}/data/clean/${id}_2_val_2.fq -p 33 -r 250 -f 500 -s 100 -o ${id}
 done
 cd ${project}
 ```
